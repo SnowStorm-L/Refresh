@@ -13,6 +13,7 @@
 		0F3926981F32F1CD00A20B65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F3926971F32F1CD00A20B65 /* Assets.xcassets */; };
 		0F39269B1F32F1CD00A20B65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3926991F32F1CD00A20B65 /* LaunchScreen.storyboard */; };
 		0F3926A31F32F20700A20B65 /* UIScrollView+Refresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3926A21F32F20700A20B65 /* UIScrollView+Refresh.swift */; };
+		0F4DA0201F373DB1000E2542 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4DA01F1F373DB1000E2542 /* UIScrollView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		0F39269A1F32F1CD00A20B65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F39269C1F32F1CD00A20B65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F3926A21F32F20700A20B65 /* UIScrollView+Refresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Refresh.swift"; sourceTree = "<group>"; };
+		0F4DA01F1F373DB1000E2542 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				0F3926901F32F1CD00A20B65 /* AppDelegate.swift */,
 				0F3926921F32F1CD00A20B65 /* ViewController.swift */,
 				0F3926A21F32F20700A20B65 /* UIScrollView+Refresh.swift */,
+				0F4DA01F1F373DB1000E2542 /* UIScrollView+Extension.swift */,
 				0F3926941F32F1CD00A20B65 /* Main.storyboard */,
 				0F3926971F32F1CD00A20B65 /* Assets.xcassets */,
 				0F3926991F32F1CD00A20B65 /* LaunchScreen.storyboard */,
@@ -143,6 +146,7 @@
 				0F3926931F32F1CD00A20B65 /* ViewController.swift in Sources */,
 				0F3926A31F32F20700A20B65 /* UIScrollView+Refresh.swift in Sources */,
 				0F3926911F32F1CD00A20B65 /* AppDelegate.swift in Sources */,
+				0F4DA0201F373DB1000E2542 /* UIScrollView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
