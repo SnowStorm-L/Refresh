@@ -28,7 +28,7 @@ extension UIScrollView {
                 headerView?.removeFromSuperview()
                 insertSubview(newView, at: 0)
                 
-                // 添加新的
+                
                 // https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVOCompliance.html#//apple_ref/doc/uid/20002178-BAJEAIEE
                 /*
                  正确使用-will | didChangeValueForKey：
@@ -45,9 +45,11 @@ extension UIScrollView {
                  Key-Value Observing (KVO) 建立在 KVC 之上，
                  它能够观察一个对象的 KVC key path 值的变化 所以要KVO,它的类必须符合KVC
                  
-                 例如 @public { int } 有不写setter,getter,这些不符合条件(KVC)
+                 例如 @public { int } 又不写setter,getter,这些不符合条件(KVC)
                  所以要用will/didChange 把修改值放到2个方法之间 KVO就可以监听到了 这种监听属于手动更改通知(看链接)
                  */
+                
+                // 添加新的
                 willChangeValue(forKey: Constant.headerView)
                 objc_setAssociatedObject(self, Constant.refreshHeaderKey, newView, .OBJC_ASSOCIATION_ASSIGN)
                 didChangeValue(forKey: Constant.headerView)

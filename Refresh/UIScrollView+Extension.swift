@@ -14,13 +14,13 @@ extension UIScrollView {
     /// 内容顶部坐标
     var insetTop: CGFloat {
 
-        get { return self.contentInset.top }
+        get { return contentInset.top }
 
         set (newValue) {
 
-            var inset = self.contentInset
+            var inset = contentInset
             inset.top = newValue
-            self.contentInset = inset
+            contentInset = inset
 
         }
 
@@ -30,13 +30,13 @@ extension UIScrollView {
     /// 内容顶部坐标
     var insetBottom: CGFloat {
 
-        get { return self.contentInset.bottom }
+        get { return contentInset.bottom }
 
         set (newValue) {
 
-            var inset = self.contentInset
+            var inset = contentInset
             inset.bottom = newValue
-            self.contentInset = inset
+            contentInset = inset
 
         }
 
@@ -45,13 +45,13 @@ extension UIScrollView {
     /// 内容左坐标
     var insetLeft: CGFloat {
 
-        get { return self.contentInset.left }
+        get { return contentInset.left }
 
         set (newValue) {
 
-            var inset = self.contentInset
+            var inset = contentInset
             inset.left = newValue
-            self.contentInset = inset
+            contentInset = inset
 
         }
 
@@ -60,13 +60,13 @@ extension UIScrollView {
     /// 内容右坐标
     var insetRight: CGFloat {
 
-        get { return self.contentInset.right }
+        get { return contentInset.right }
 
         set (newValue) {
 
-            var inset = self.contentInset
+            var inset = contentInset
             inset.right = newValue
-            self.contentInset = inset
+            contentInset = inset
 
         }
 
@@ -75,13 +75,13 @@ extension UIScrollView {
     /// 内容X坐标
     var offsetX: CGFloat {
 
-        get { return self.contentOffset.x }
+        get { return contentOffset.x }
 
         set (newValue) {
 
-            var offset = self.contentOffset
+            var offset = contentOffset
             offset.x = newValue
-            self.contentOffset = offset
+            contentOffset = offset
 
         }
 
@@ -91,13 +91,13 @@ extension UIScrollView {
     /// 内容Y坐标
     var offsetY: CGFloat {
 
-        get { return self.contentOffset.y }
+        get { return contentOffset.y }
 
         set (newValue) {
 
-            var offset = self.contentOffset
+            var offset = contentOffset
             offset.y = newValue
-            self.contentOffset = offset
+            contentOffset = offset
 
         }
 
@@ -107,13 +107,13 @@ extension UIScrollView {
     /// 内容宽度
     var contentWidth: CGFloat {
 
-        get { return self.contentSize.width }
+        get { return contentSize.width }
 
         set (newValue) {
 
-            var content = self.contentSize
+            var content = contentSize
             content.width = newValue
-            self.contentSize = content
+            contentSize = content
 
         }
 
@@ -123,13 +123,13 @@ extension UIScrollView {
     /// 内容高度
     var contentHeight: CGFloat {
 
-        get { return self.contentSize.height }
+        get { return contentSize.height }
 
         set (newValue) {
 
-            var content = self.contentSize
+            var content = contentSize
             content.height = newValue
-            self.contentSize = content
+            contentSize = content
 
         }
 
