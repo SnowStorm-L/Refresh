@@ -163,7 +163,7 @@ class RefreshBase: UIView {
         
         beginRefreshingCompletionBlock = completion
         
-        UIView.animate(withDuration: Constant.AnimationDuration.fast) { 
+        UIView.animate(withDuration: Constant.AnimationDuration.fast) {
             self.alpha = 1.0
         }
         

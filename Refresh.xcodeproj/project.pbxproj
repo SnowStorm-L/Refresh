@@ -16,6 +16,7 @@
 		0F4DA0201F373DB1000E2542 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4DA01F1F373DB1000E2542 /* UIScrollView+Extension.swift */; };
 		0F638FC51F3801F000F818DD /* RefreshBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F638FC41F3801F000F818DD /* RefreshBase.swift */; };
 		0F638FC71F380F7700F818DD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F638FC61F380F7700F818DD /* UIView+Extension.swift */; };
+		0FE7B35D1F395263008D2051 /* RefreshLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE7B35C1F395263008D2051 /* RefreshLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0F4DA01F1F373DB1000E2542 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		0F638FC41F3801F000F818DD /* RefreshBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshBase.swift; sourceTree = "<group>"; };
 		0F638FC61F380F7700F818DD /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		0FE7B35C1F395263008D2051 /* RefreshLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				0F3926901F32F1CD00A20B65 /* AppDelegate.swift */,
 				0F3926921F32F1CD00A20B65 /* ViewController.swift */,
+				0FE7B35C1F395263008D2051 /* RefreshLabel.swift */,
 				0F638FC41F3801F000F818DD /* RefreshBase.swift */,
 				0F3926A21F32F20700A20B65 /* UIScrollView+Refresh.swift */,
 				0F4DA01F1F373DB1000E2542 /* UIScrollView+Extension.swift */,
@@ -155,6 +158,7 @@
 				0F3926A31F32F20700A20B65 /* UIScrollView+Refresh.swift in Sources */,
 				0F3926911F32F1CD00A20B65 /* AppDelegate.swift in Sources */,
 				0F4DA0201F373DB1000E2542 /* UIScrollView+Extension.swift in Sources */,
+				0FE7B35D1F395263008D2051 /* RefreshLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
