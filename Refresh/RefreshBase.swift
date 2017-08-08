@@ -39,7 +39,7 @@ class RefreshBase: UIView {
     }
     
     /// 记录scrollView刚开始的inset
-    var scrollViewOriginalInset: UIEdgeInsets?
+    var scrollViewOriginalInset = UIEdgeInsets.zero
     
     var beginRefreshingCompletionBlock: (()->Void)?
     var endRefreshingCompletionBlock: (()->Void)?
@@ -102,7 +102,7 @@ class RefreshBase: UIView {
             x = 0
             scrollView = newView
             scrollView?.alwaysBounceVertical = true
-            scrollViewOriginalInset = scrollView?.contentInset
+            scrollViewOriginalInset = scrollView?.contentInset ?? .zero
             addObservers()
         }
         
