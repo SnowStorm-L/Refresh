@@ -18,6 +18,14 @@ class RefreshFooter: RefreshBase {
         }
     }
     
+    class func footerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshFooter
+    {
+        let refreshFooter = RefreshFooter()
+        refreshFooter.refreshingBlock = refreshingBlock
+        refreshFooter.backgroundColor = .blue
+        return refreshFooter
+    }
+    
     override func defalutSetting() {
         super.defalutSetting()
         
@@ -29,9 +37,14 @@ class RefreshFooter: RefreshBase {
         super.willMove(toSuperview: newSuperview)
         
         // 监听scrollView数据的变化
-       // if let newView = newSuperview as? UIScrollView, let scrollView = scrollView {
-           
-        //}
+        if let newView = newSuperview as? UIScrollView,
+            let scrollView = scrollView
+        {
+           let isValidate = scrollView.isKind(of: UITableView.self) || scrollView.isKind(of: UICollectionView.self)
+            if isValidate {
+                
+            }
+        }
     }
     
     func endRefreshingWithNoMoreData() {

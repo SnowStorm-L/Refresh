@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias RefreshingBlock = (()->Void)?
+
 class RefreshBase: UIView {
     
     /// 刷新控件的状态
@@ -43,6 +45,8 @@ class RefreshBase: UIView {
     
     var beginRefreshingCompletionBlock: (()->Void)?
     var endRefreshingCompletionBlock: (()->Void)?
+    
+    var refreshingBlock: RefreshingBlock
     
     /// 父控件
     weak var scrollView: UIScrollView?

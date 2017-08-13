@@ -21,6 +21,14 @@ class RefreshHeader: RefreshBase {
     
     fileprivate var insetTopDelta: CGFloat = 0.0
     
+    class func headerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshHeader
+    {
+        let refreshHeader = RefreshHeader()
+        refreshHeader.refreshingBlock = refreshingBlock
+        refreshHeader.backgroundColor = .red
+        return refreshHeader
+    }
+    
     override func defalutSetting() {
         super.defalutSetting()
         
@@ -43,7 +51,7 @@ class RefreshHeader: RefreshBase {
         // 在刷新的refreshing状态
         if refreshState == .refreshing {
             guard window != nil else { return }
-            // sectionheader停留解决
+            // sectionHeader停留解决
             var insetTop = (-scrollView.offsetY > scrollViewOriginalInset.top) ?
                             -scrollView.offsetY : scrollViewOriginalInset.top
             
