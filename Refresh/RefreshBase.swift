@@ -62,21 +62,6 @@ class RefreshBase: UIView {
     
     fileprivate var panGesture: UIPanGestureRecognizer?
     
-    struct Constant {
-        
-        struct KVO {
-            static let refreshContentOffset = "contentOffset"
-            static let refreshContentSize = "contentSize"
-            static let panState = "state"
-        }
-        
-        struct AnimationDuration {
-            static let fast = 0.25
-            static let slow = 0.4
-        }
-        
-    }
-    
     // MARK: - life cycle
     
     override init(frame: CGRect) {

@@ -10,18 +10,9 @@ import UIKit
 
 extension UIScrollView {
     
-    fileprivate struct Constant {
-        
-        static let refreshHeaderKey = UnsafePointer<Any>.init(bitPattern: "headerKey".hashValue)
-        static let refreshFooterKey = UnsafePointer<Any>.init(bitPattern: "footerKey".hashValue)
-        
-        static let headerView = "headerView"
-        static let footerView = "footerView"
-    }
-    
     var headerView: UIView? {
         get {
-            return objc_getAssociatedObject(self, Constant.refreshHeaderKey) as? UIView
+            return objc_getAssociatedObject(self, Constant.Runtime.associatedHeaderKey) as? UIView
         } set {
              if let newView = newValue, headerView != newValue {
                 // 删除旧的
@@ -50,16 +41,16 @@ extension UIScrollView {
                  */
                 
                 // 添加新的
-                willChangeValue(forKey: Constant.headerView)
-                objc_setAssociatedObject(self, Constant.refreshHeaderKey, newView, .OBJC_ASSOCIATION_ASSIGN)
-                didChangeValue(forKey: Constant.headerView)
+                willChangeValue(forKey: Constant.KVO.headerView)
+                objc_setAssociatedObject(self, Constant.Runtime.associatedHeaderKey, newView, .OBJC_ASSOCIATION_ASSIGN)
+                didChangeValue(forKey: Constant.KVO.headerView)
             }
         }
     }
 
     var footerView: UIView? {
         get {
-           return objc_getAssociatedObject(self, Constant.refreshFooterKey) as? UIView
+           return objc_getAssociatedObject(self, Constant.Runtime.associatedFooterKey) as? UIView
         } set {
             if let newView = newValue, footerView != newValue {
                 // 删除旧的
@@ -67,9 +58,9 @@ extension UIScrollView {
                 insertSubview(newView, at: 0)
                 
                 // 添加新的
-                willChangeValue(forKey: Constant.footerView)
-                objc_setAssociatedObject(self, Constant.refreshFooterKey, newView, .OBJC_ASSOCIATION_ASSIGN)
-                didChangeValue(forKey: Constant.footerView)
+                willChangeValue(forKey: Constant.KVO.footerView)
+                objc_setAssociatedObject(self, Constant.Runtime.associatedFooterKey, newView, .OBJC_ASSOCIATION_ASSIGN)
+                didChangeValue(forKey: Constant.KVO.footerView)
             }
         }
     }

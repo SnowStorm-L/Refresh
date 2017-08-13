@@ -13,12 +13,6 @@ class RefreshHeader: RefreshBase {
     /// 忽略多少scrollView的contentInset的top
     var ignoredScrollViewContentInsetTop: CGFloat = 0.0
     
-    struct Constant {
-        struct RefreshHeader {
-            static let defaultHeight: CGFloat = 54.0
-        }
-    }
-    
     fileprivate var insetTopDelta: CGFloat = 0.0
     
     class func headerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshHeader

@@ -10,13 +10,6 @@ import UIKit
 
 class RefreshLabel: UILabel {
     
-    struct Constant {
-        struct RefreshLabel {
-            static let font = UIFont.boldSystemFont(ofSize: 14)
-            static let textColor = UIColor(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
-        }
-    }
-    
     class func refreshLabel() -> RefreshLabel {
         
         let label = RefreshLabel()

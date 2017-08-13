@@ -12,12 +12,6 @@ class RefreshFooter: RefreshBase {
     
     var isAutomaticallyHidden = false
     
-    struct Constant {
-        struct RefreshFooter {
-            static let defaultHeight: CGFloat = 44.0
-        }
-    }
-    
     class func footerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshFooter
     {
         let refreshFooter = RefreshFooter()
@@ -37,7 +31,7 @@ class RefreshFooter: RefreshBase {
         super.willMove(toSuperview: newSuperview)
         
         // 监听scrollView数据的变化
-        if let newView = newSuperview as? UIScrollView,
+        if let _ = newSuperview as? UIScrollView,
             let scrollView = scrollView
         {
            let isValidate = scrollView.isKind(of: UITableView.self) || scrollView.isKind(of: UICollectionView.self)
