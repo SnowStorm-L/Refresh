@@ -26,7 +26,7 @@ class RefreshFooter: RefreshBase {
         super.defalutSetting()
         
         height = Constant.RefreshFooter.defaultHeight
-    
+        
     }
     
     override func willMove(toSuperview newSuperview: UIView?) {
@@ -49,22 +49,25 @@ class RefreshFooter: RefreshBase {
         
         // 尾部控件刚好出现的offsetY
         let happenOffsetY = self.happenOffsetY()
+        
         // 如果是向下滚动到看不见尾部控件，直接返回
         if currentOffsetY <= happenOffsetY { return }
         
         let pullingPercent = (currentOffsetY - happenOffsetY) / height
         
         if (scrollView.isDragging) {
+            
             self.pullingPercent = pullingPercent
+            
             // 普通 和 即将刷新 的临界点
-            let normal2pullingOffsetY = happenOffsetY + height;
+            let normal2pullingOffsetY = happenOffsetY + height
             
             if refreshState == .default && currentOffsetY > normal2pullingOffsetY {
                 // 转为即将刷新状态
                 refreshState = .pulling
             } else if refreshState == .pulling && currentOffsetY <= normal2pullingOffsetY {
                 // 转为普通状态
-                refreshState = .default;
+                refreshState = .default
             }
         } else if refreshState == .pulling {// 即将刷新 && 手松开
             // 开始刷新
@@ -96,7 +99,7 @@ class RefreshFooter: RefreshBase {
             return 0
         }
         
-       return scrollView.contentHeight - (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
+        return scrollView.contentHeight - (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
     }
     
     fileprivate func happenOffsetY() -> CGFloat {
