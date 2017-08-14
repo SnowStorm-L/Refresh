@@ -12,6 +12,8 @@ class RefreshFooter: RefreshBase {
     
     var isAutomaticallyHidden = false
     
+    var ignoredScrollViewContentInsetBottom: CGFloat = 0.0
+    
     class func footerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshFooter
     {
         let refreshFooter = RefreshFooter()
@@ -29,20 +31,79 @@ class RefreshFooter: RefreshBase {
     
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
+        scrollViewContentSizeDidChange(change: nil)
+    }
+    
+    override func scrollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?) {
+        super.scrollViewContentOffsetDidChange(change: change)
         
-        // 监听scrollView数据的变化
-        if let _ = newSuperview as? UIScrollView,
-            let scrollView = scrollView
-        {
-           let isValidate = scrollView.isKind(of: UITableView.self) || scrollView.isKind(of: UICollectionView.self)
-            if isValidate {
-                
+        // 如果正在刷新，直接返回
+        guard let scrollView = scrollView, refreshState != .refreshing else {
+            return
+        }
+        
+        scrollViewOriginalInset = scrollView.contentInset
+        
+        // 当前的contentOffset
+        let currentOffsetY = scrollView.offsetY
+        
+        // 尾部控件刚好出现的offsetY
+        let happenOffsetY = self.happenOffsetY()
+        // 如果是向下滚动到看不见尾部控件，直接返回
+        if currentOffsetY <= happenOffsetY { return }
+        
+        let pullingPercent = (currentOffsetY - happenOffsetY) / height
+        
+        if (scrollView.isDragging) {
+            self.pullingPercent = pullingPercent
+            // 普通 和 即将刷新 的临界点
+            let normal2pullingOffsetY = happenOffsetY + height;
+            
+            if refreshState == .default && currentOffsetY > normal2pullingOffsetY {
+                // 转为即将刷新状态
+                refreshState = .pulling
+            } else if refreshState == .pulling && currentOffsetY <= normal2pullingOffsetY {
+                // 转为普通状态
+                refreshState = .default;
             }
+        } else if refreshState == .pulling {// 即将刷新 && 手松开
+            // 开始刷新
+            beginRefreshing()
+        } else if pullingPercent < 1 {
+            self.pullingPercent = pullingPercent
+        }
+        
+    }
+    
+    override func scrollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?) {
+        super.scrollViewContentSizeDidChange(change: nil)
+        // 内容的高度
+        if let scrollView = scrollView {
+            let contentHeight = scrollView.contentHeight + ignoredScrollViewContentInsetBottom
+            let scrollHeight = scrollView.height - scrollViewOriginalInset.top - scrollViewOriginalInset.bottom + ignoredScrollViewContentInsetBottom
+            // 设置位置和尺寸
+            self.y = max(contentHeight, scrollHeight)
         }
     }
     
     func endRefreshingWithNoMoreData() {
         refreshState = .noMoreData
+    }
+    
+    fileprivate func heightForContentBreakView() -> CGFloat {
+        
+        guard let scrollView = scrollView else {
+            return 0
+        }
+        
+       return scrollView.contentHeight - (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
+    }
+    
+    fileprivate func happenOffsetY() -> CGFloat {
+        
+        let deltaH = heightForContentBreakView()
+        
+        return deltaH > 0 ? (deltaH - scrollViewOriginalInset.top) : (-scrollViewOriginalInset.top)
     }
     
 }
