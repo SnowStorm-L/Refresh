@@ -15,6 +15,40 @@ class RefreshHeader: RefreshBase {
     
     fileprivate var insetTopDelta: CGFloat = 0.0
     
+    override var refreshState: RefreshBase.RefreshState {
+        didSet {
+            if refreshState == oldValue {
+                return
+            }
+            super.refreshState = refreshState
+            
+            guard let scrollView = scrollView else {
+                return
+            }
+            
+            if oldValue == .default {
+                if refreshState != .refreshing { return }
+                // 恢复inset和offset
+                UIView.animate(withDuration: Constant.AnimationDuration.slow, animations: {
+                    scrollView.insetTop += self.insetTopDelta
+                    // 自动调整透明度
+                    if self.isAutomaticallyChangeAlpha {
+                        self.alpha = 0.0
+                    }
+                }) { (finished) in
+                    self.pullingPercent = 0.0
+                    self.endRefreshing(completion: nil)
+                }
+                
+            } else if oldValue == .refreshing {
+                DispatchQueue.main.async {
+                    
+                }
+            }
+            
+        }
+    }
+    
     class func headerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshHeader
     {
         let refreshHeader = RefreshHeader()
@@ -44,13 +78,13 @@ class RefreshHeader: RefreshBase {
         
         // 在刷新的refreshing状态
         if refreshState == .refreshing {
-            guard window != nil else { return }
+            if window == nil { return }
             // sectionHeader停留解决
             var insetTop = (-scrollView.offsetY > scrollViewOriginalInset.top) ?
-                            -scrollView.offsetY : scrollViewOriginalInset.top
+                -scrollView.offsetY : scrollViewOriginalInset.top
             
             insetTop = (insetTop > (height + scrollViewOriginalInset.top)) ?
-                        height + scrollViewOriginalInset.top : insetTop
+                height + scrollViewOriginalInset.top : insetTop
             
             scrollView.insetTop = insetTop
             

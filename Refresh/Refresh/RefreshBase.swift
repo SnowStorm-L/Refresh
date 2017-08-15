@@ -49,7 +49,7 @@ class RefreshBase: UIView {
     var refreshingBlock: RefreshingBlock
     
     /// 父控件
-    weak var scrollView: UIScrollView?
+    dynamic weak var scrollView: UIScrollView?
     
     /// 拉拽的百分比
     var pullingPercent: CGFloat = 0.0 {
@@ -60,7 +60,7 @@ class RefreshBase: UIView {
         }
     }
     
-    fileprivate var panGesture: UIPanGestureRecognizer?
+    fileprivate dynamic var panGesture: UIPanGestureRecognizer?
     
     // MARK: - life cycle
     
@@ -86,7 +86,7 @@ class RefreshBase: UIView {
         super.willMove(toSuperview: newSuperview)
         
         if let newView = newSuperview as? UIScrollView {
-            
+            removeObservers()
             width = newView.width
             x = 0
             scrollView = newView
@@ -138,7 +138,7 @@ class RefreshBase: UIView {
         if isHidden { return }
         
         if keyPath == Constant.KVO.refreshContentOffset {
-            scrollViewContentSizeDidChange(change: change)
+            scrollViewContentOffsetDidChange(change: change)
         } else if keyPath == Constant.KVO.panState  {
             scrollViewPanStateDidChange(change: change)
         }
