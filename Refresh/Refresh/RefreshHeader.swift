@@ -20,7 +20,7 @@ class RefreshHeader: RefreshBase {
             if refreshState == oldValue {
                 return
             }
-            super.refreshState = refreshState
+            super.refreshState = oldValue
             
             guard let scrollView = scrollView else {
                 return
@@ -42,7 +42,15 @@ class RefreshHeader: RefreshBase {
                 
             } else if oldValue == .refreshing {
                 DispatchQueue.main.async {
-                    
+                    UIView.animate(withDuration: Constant.AnimationDuration.fast, animations: { 
+                        let top = self.scrollViewOriginalInset.top + self.height
+                        // 增加滚动区域top
+                        scrollView.insetTop = top
+                        // 设置滚动位置
+                        scrollView.setContentOffset(CGPoint(x: 0, y: -top), animated: false)
+                    }) { (finished) in
+                        
+                    }
                 }
             }
             
