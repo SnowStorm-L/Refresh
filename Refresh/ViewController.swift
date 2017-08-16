@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         }
     }
     
-    lazy var testDataSource = [String]()
+    lazy var testDataSource = ["A", "B", "C"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

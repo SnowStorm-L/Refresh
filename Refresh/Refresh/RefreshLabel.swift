@@ -30,7 +30,7 @@ class RefreshLabel: UILabel {
         
         guard let text = (text as NSString?), text.length > 0 else { return stringWidth }
         
-        stringWidth = text.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil).size.width
+        stringWidth = text.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil).size.width
         
         return stringWidth
     }

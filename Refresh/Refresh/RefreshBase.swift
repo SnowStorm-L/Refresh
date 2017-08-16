@@ -49,7 +49,7 @@ class RefreshBase: UIView {
     var refreshingBlock: RefreshingBlock
     
     /// 父控件
-    dynamic weak var scrollView: UIScrollView?
+    @objc dynamic weak var scrollView: UIScrollView?
     
     /// 拉拽的百分比
     var pullingPercent: CGFloat = 0.0 {
@@ -60,7 +60,7 @@ class RefreshBase: UIView {
         }
     }
     
-    fileprivate dynamic var panGesture: UIPanGestureRecognizer?
+    @objc fileprivate dynamic var panGesture: UIPanGestureRecognizer?
     
     // MARK: - life cycle
     

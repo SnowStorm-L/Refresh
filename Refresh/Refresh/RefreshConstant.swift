@@ -25,8 +25,8 @@ struct Constant {
     }
     
     struct Runtime {
-        static let associatedHeaderKey = UnsafePointer<Any>.init(bitPattern: "headerKey".hashValue)
-        static let associatedFooterKey = UnsafePointer<Any>.init(bitPattern: "footerKey".hashValue)
+        static var associatedHeaderKey = "headerKey"
+        static var associatedFooterKey = "footerKey"
     }
     
     struct RefreshFooter {
