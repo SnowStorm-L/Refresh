@@ -17,6 +17,8 @@ struct Constant {
         
         static let headerView = "headerView"
         static let footerView = "footerView"
+        
+        static let reloadDataBlock = "reloadDataBlock"
     }
     
     struct AnimationDuration {
@@ -27,6 +29,7 @@ struct Constant {
     struct Runtime {
         static var associatedHeaderKey = "headerKey"
         static var associatedFooterKey = "footerKey"
+        static var associatedReloadDataBlockKey = "reloadDataBlockKey"
     }
     
     struct RefreshFooter {
