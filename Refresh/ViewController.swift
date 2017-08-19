@@ -10,18 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var testTableView: UITableView! {
-        didSet {
-            setupRefresh()
-            testTableView.tableFooterView = UIView()
-        }
-    }
+    @IBOutlet weak var testTableView: UITableView!
+    
     
     lazy var testDataSource = ["A", "B", "C"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupRefresh()
+        testTableView.tableFooterView = UIView()
     }
     
     func setupRefresh() {

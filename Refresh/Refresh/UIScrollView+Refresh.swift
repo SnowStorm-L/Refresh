@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIScrollView {
+extension UIScrollView: SelfAware {
     
     var headerView: UIView? {
         get {
@@ -100,43 +100,32 @@ extension UIScrollView {
     func executeReloadDataBlock() {
         reloadDataBlock?(totalDataCount)
     }
+    
+    static func awake() {
+        
+        exchangeInstanceMethod(method1: #selector(UITableView.reloadData), method2: #selector(myTableViewReloadData))
+        exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
+    }
+    
+    @objc dynamic private func myTableViewReloadData() {
+        myTableViewReloadData()
+        executeReloadDataBlock()
+    }
+    
+    @objc dynamic private func myCollectionViewReloadData() {
+        myCollectionViewReloadData()
+        executeReloadDataBlock()
+    }
 
 }
 
 fileprivate extension NSObject {
     
-    class func exchangeInstanceMethod(method1: Selector,method2: Selector) {
+    class func exchangeInstanceMethod(method1: Selector, method2: Selector) {
         if let m1 = class_getInstanceMethod(self, method1),
             let m2 = class_getInstanceMethod(self, method2) {
             method_exchangeImplementations(m1, m2)
         }
-    }
-    
-}
-
-
-extension UICollectionView: SelfAware {
-  
-    static func awake() {
-        exchangeInstanceMethod(method1: #selector(reloadData), method2: #selector(myReloadData))
-    }
-    
-    @objc func myReloadData() {
-        myReloadData()
-        executeReloadDataBlock()
-    }
-    
-}
-
-extension UITableView {
-    
-    static func awake() {
-        exchangeInstanceMethod(method1: #selector(reloadData), method2: #selector(myReloadData))
-    }
-    
-    @objc func myReloadData() {
-        myReloadData()
-        executeReloadDataBlock()
     }
     
 }
@@ -146,31 +135,31 @@ protocol SelfAware: class {
 }
 
 class NothingToSeeHere {
-    
+
     static func harmlessFunction() {
-        
+
         let typeCount = Int(objc_getClassList(nil, 0))
         let types = UnsafeMutablePointer<AnyClass>.allocate(capacity: typeCount)
         let autoreleasingTypes = AutoreleasingUnsafeMutablePointer<AnyClass>(types)
         objc_getClassList(autoreleasingTypes, Int32(typeCount))
         for index in 0 ..< typeCount { (types[index] as? SelfAware.Type)?.awake() }
         types.deallocate(capacity: typeCount)
-        
+
     }
-    
+
 }
 
 extension UIApplication {
-    
+
     private static let runOnce: Void = {
         NothingToSeeHere.harmlessFunction()
     }()
-    
+
     override open var next: UIResponder? {
         // Called before applicationDidFinishLaunching
         UIApplication.runOnce
         return super.next
     }
-    
+
 }
 
