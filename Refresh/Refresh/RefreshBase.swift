@@ -16,7 +16,7 @@ class RefreshBase: UIView {
     enum RefreshState: Int {
         case `default` = 1   /// 默认状态
         case pulling         /// 拖拽状态
-        case willRefreshing  /// 即将刷新状态
+        case willRefresh  /// 即将刷新状态
         case refreshing      /// 刷新中状态
         case noMoreData      /// 所有数据加载完毕，没有更多的数据状态
     }
@@ -30,7 +30,7 @@ class RefreshBase: UIView {
     }
     
     var isRefreshing: Bool {
-        return refreshState == .refreshing || refreshState == .willRefreshing
+        return refreshState == .refreshing || refreshState == .willRefresh
     }
     
     var isAutomaticallyChangeAlpha: Bool = false {
@@ -100,7 +100,7 @@ class RefreshBase: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        if refreshState == .willRefreshing {
+        if refreshState == .willRefresh {
             refreshState = .refreshing
         }
         
@@ -162,7 +162,7 @@ class RefreshBase: UIView {
             refreshState = .refreshing
         } else {
             if refreshState != .refreshing {
-                refreshState = .willRefreshing
+                refreshState = .willRefresh
                 setNeedsDisplay()
             }
         }
@@ -174,6 +174,13 @@ class RefreshBase: UIView {
         endRefreshingCompletionBlock = completion
         
         refreshState = .default
+    }
+    
+    func executeRefreshingCallback() {
+        DispatchQueue.main.async {
+            self.refreshingBlock?()
+            self.beginRefreshingCompletionBlock?()
+        }
     }
     
     func defalutSetting() {

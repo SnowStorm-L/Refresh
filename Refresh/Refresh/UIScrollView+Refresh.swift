@@ -103,8 +103,11 @@ extension UIScrollView: SelfAware {
     
     static func awake() {
         
-        exchangeInstanceMethod(method1: #selector(UITableView.reloadData), method2: #selector(myTableViewReloadData))
-        exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
+        if hash() == UITableView.hash() {
+            exchangeInstanceMethod(method1: #selector(UITableView.reloadData), method2: #selector(myTableViewReloadData))
+        } else if hash() == UICollectionView.hash() {
+             exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
+        }
     }
     
     @objc dynamic private func myTableViewReloadData() {
