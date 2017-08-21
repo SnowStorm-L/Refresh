@@ -50,7 +50,7 @@ extension UIScrollView: SelfAware {
     
     var footerView: UIView? {
         get {
-            return objc_getAssociatedObject(self, Constant.Runtime.associatedFooterKey) as? UIView
+            return objc_getAssociatedObject(self, &Constant.Runtime.associatedFooterKey) as? UIView
         } set {
             if let newView = newValue, footerView != newValue {
                 // 删除旧的

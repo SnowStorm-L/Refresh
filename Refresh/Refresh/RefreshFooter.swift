@@ -24,7 +24,7 @@ class RefreshFooter: RefreshBase {
         refreshFooter.backgroundColor = .blue
         return refreshFooter
     }
-    
+        
     override var refreshState: RefreshBase.RefreshState {
         didSet {
             if refreshState == oldValue { return }
@@ -33,7 +33,6 @@ class RefreshFooter: RefreshBase {
             guard let scrollView = scrollView else {
                 return
             }
-            print(refreshState)
             // 根据状态来设置属性
             if refreshState == .noMoreData || refreshState == .default {
                 // 刷新完毕
@@ -95,8 +94,8 @@ class RefreshFooter: RefreshBase {
                     }
                 }
             }
-            scrollViewContentSizeDidChange(change: nil)
         }
+        scrollViewContentSizeDidChange(change: nil)
     }
     
     override func scrollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?) {
@@ -119,6 +118,11 @@ class RefreshFooter: RefreshBase {
         if currentOffsetY <= happenOffsetY { return }
         
         let pullingPercent = (currentOffsetY - happenOffsetY) / height
+        
+        if refreshState == .noMoreData {
+            self.pullingPercent = pullingPercent
+            return
+        }
         
         if (scrollView.isDragging) {
             
@@ -144,13 +148,13 @@ class RefreshFooter: RefreshBase {
     }
     
     override func scrollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?) {
-        super.scrollViewContentSizeDidChange(change: nil)
+        super.scrollViewContentSizeDidChange(change: change)
         // 内容的高度
         if let scrollView = scrollView {
             let contentHeight = scrollView.contentHeight + ignoredScrollViewContentInsetBottom
             let scrollHeight = scrollView.height - scrollViewOriginalInset.top - scrollViewOriginalInset.bottom + ignoredScrollViewContentInsetBottom
             // 设置位置和尺寸
-            self.y = max(contentHeight, scrollHeight)
+            y = max(contentHeight, scrollHeight)
         }
     }
     
@@ -163,8 +167,8 @@ class RefreshFooter: RefreshBase {
         guard let scrollView = scrollView else {
             return 0
         }
-        
-        return scrollView.contentHeight - (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
+        let h = (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
+        return scrollView.contentHeight - h
     }
     
     fileprivate func happenOffsetY() -> CGFloat {

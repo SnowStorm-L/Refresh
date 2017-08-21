@@ -12,7 +12,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var testTableView: UITableView!
     
-    
     lazy var testDataSource = ["A", "B", "C"]
     
     override func viewDidLoad() {
@@ -23,7 +22,9 @@ class ViewController: UIViewController {
     
     func setupRefresh() {
         
-        testTableView.headerView = RefreshHeader.headerRefreshing { [weak self] in
+       // weak var tableView = self.testTableView
+        
+       testTableView.headerView = RefreshHeader.headerRefreshing { [weak self] in
             self?.loadData()
             self?.testTableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -31,7 +32,7 @@ class ViewController: UIViewController {
                 a?.endRefreshing()
             }
         }
-       
+        
         testTableView.footerView = RefreshFooter.footerRefreshing { [weak self] in
             self?.loadData()
             self?.testTableView.reloadData()
@@ -40,7 +41,7 @@ class ViewController: UIViewController {
                 a?.endRefreshing()
             }
         }
-        
+    
     }
     
     func loadData() {
