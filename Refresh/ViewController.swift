@@ -22,26 +22,30 @@ class ViewController: UIViewController {
     
     func setupRefresh() {
         
-       // weak var tableView = self.testTableView
-        
        testTableView.headerView = RefreshHeader.headerRefreshing { [weak self] in
             self?.loadData()
-            self?.testTableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                let a = self?.testTableView.headerView as? RefreshHeader
-                a?.endRefreshing()
-            }
+        self?.endRefresh(isHeaderFresh: true)
         }
         
         testTableView.footerView = RefreshFooter.footerRefreshing { [weak self] in
             self?.loadData()
-            self?.testTableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                let a = self?.testTableView.footerView as? RefreshFooter
-                a?.endRefreshing()
-            }
+            self?.endRefresh(isHeaderFresh: false)
         }
     
+    }
+    
+    func endRefresh(isHeaderFresh: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if isHeaderFresh {
+                if let headerReFresh = self.testTableView.headerView as? RefreshHeader {
+                    headerReFresh.endRefreshing()
+                }
+            } else {
+                if let fooerRefresh = self.testTableView.footerView as? RefreshFooter {
+                    fooerRefresh.endRefreshing()
+                }
+            }
+        }
     }
     
     func loadData() {
@@ -52,7 +56,7 @@ class ViewController: UIViewController {
             let index = Int(arc4random()%26)
             testDataSource.append(random[index])
         }
-        
+        testTableView.reloadData()
     }
     
 }
