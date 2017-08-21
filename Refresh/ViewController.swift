@@ -24,18 +24,16 @@ class ViewController: UIViewController {
     func setupRefresh() {
         
         testTableView.headerView = RefreshHeader.headerRefreshing { [weak self] in
-            print("走了")
             self?.loadData()
             self?.testTableView.reloadData()
-            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                let a = self?.testTableView.headerView as? RefreshHeader
+                a?.endRefreshing()
+            }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let a = self.testTableView.headerView as? RefreshHeader
-            a?.endRefreshing()
-        }
-        
+       
         testTableView.footerView = RefreshFooter.footerRefreshing {
-            
+            print("走了")
         }
         
     }

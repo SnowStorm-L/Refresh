@@ -31,7 +31,15 @@ class RefreshFooter: RefreshBase {
     
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
-        scrollViewContentSizeDidChange(change: nil)
+        if newSuperview != nil, let scrollView = scrollView {
+            if scrollView.isKind(of: UITableView.self) || scrollView.isKind(of: UICollectionView.self) {
+                scrollView.reloadDataBlock = { (totalDataCount) in
+                    if self.isAutomaticallyHidden {
+                        self.isHidden = totalDataCount == 0
+                    }
+                }
+            }
+        }
     }
     
     override func scrollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?) {
