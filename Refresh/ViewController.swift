@@ -32,8 +32,13 @@ class ViewController: UIViewController {
             }
         }
        
-        testTableView.footerView = RefreshFooter.footerRefreshing {
-            print("走了")
+        testTableView.footerView = RefreshFooter.footerRefreshing { [weak self] in
+            self?.loadData()
+            self?.testTableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                let a = self?.testTableView.footerView as? RefreshFooter
+                a?.endRefreshing()
+            }
         }
         
     }
