@@ -10,38 +10,43 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var testTableView: UITableView!
+    @IBOutlet weak var testTableView: UITableView! {
+        didSet {
+            testTableView.tableFooterView = UIView()
+        }
+    }
     
     lazy var testDataSource = ["A", "B", "C"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupRefresh()
-        testTableView.tableFooterView = UIView()
+        
     }
     
     func setupRefresh() {
         
-       testTableView.headerView = RefreshHeader.headerRefreshing { [weak self] in
-            self?.loadData()
-        self?.endRefresh(isHeaderFresh: true)
+        testTableView.headerView = RefreshHeader.headerRefreshing { [weak self] in
+            self?.endRefresh(isHeaderFresh: true)
         }
         
         testTableView.footerView = RefreshFooter.footerRefreshing { [weak self] in
-            self?.loadData()
             self?.endRefresh(isHeaderFresh: false)
         }
-    
+        
     }
     
     func endRefresh(isHeaderFresh: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if isHeaderFresh {
                 if let headerReFresh = self.testTableView.headerView as? RefreshHeader {
+                    self.loadData()
                     headerReFresh.endRefreshing()
                 }
             } else {
                 if let fooerRefresh = self.testTableView.footerView as? RefreshFooter {
+                    self.loadData()
                     fooerRefresh.endRefreshing()
                 }
             }

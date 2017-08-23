@@ -24,6 +24,19 @@ class RefreshFooter: RefreshBase {
         refreshFooter.backgroundColor = .blue
         return refreshFooter
     }
+    
+    override func scrollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?) {
+        super.scrollViewContentSizeDidChange(change: change)
+        // 内容的高度
+        if let scrollView = scrollView {
+            let contentHeight = scrollView.contentHeight + ignoredScrollViewContentInsetBottom
+            let scrollHeight = scrollView.height -
+                scrollViewOriginalInset.top - scrollViewOriginalInset.bottom +
+            ignoredScrollViewContentInsetBottom
+            // 设置位置和尺寸
+            y = max(contentHeight, scrollHeight)
+        }
+    }
         
     override var refreshState: RefreshBase.RefreshState {
         didSet {
@@ -88,7 +101,7 @@ class RefreshFooter: RefreshBase {
 
         if newSuperview != nil, let scrollView = scrollView {
             if scrollView.isKind(of: UITableView.self) || scrollView.isKind(of: UICollectionView.self) {
-                scrollView.reloadDataBlock = { (totalDataCount) in
+                scrollView.reloadDataBlock = { [unowned self] (totalDataCount) in
                     if self.isAutomaticallyHidden {
                         self.isHidden = totalDataCount == 0
                     }
@@ -147,17 +160,7 @@ class RefreshFooter: RefreshBase {
         
     }
     
-    override func scrollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?) {
-        super.scrollViewContentSizeDidChange(change: change)
-        // 内容的高度
-        if let scrollView = scrollView {
-            let contentHeight = scrollView.contentHeight + ignoredScrollViewContentInsetBottom
-            let scrollHeight = scrollView.height - scrollViewOriginalInset.top - scrollViewOriginalInset.bottom + ignoredScrollViewContentInsetBottom
-            // 设置位置和尺寸
-            y = max(contentHeight, scrollHeight)
-        }
-    }
-    
+
     func endRefreshingWithNoMoreData() {
         refreshState = .noMoreData
     }
