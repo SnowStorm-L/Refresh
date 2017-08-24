@@ -75,6 +75,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return testDataSource.count
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 0)
+        let headerView = UIView(frame: headerRect)
+        headerView.backgroundColor = .orange
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "testCell") ?? UITableViewCell()
