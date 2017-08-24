@@ -31,6 +31,8 @@ class ViewController: UIViewController {
             self?.endRefresh(isHeaderFresh: true)
         }
         
+        (testTableView.headerView as? RefreshHeader)?.isAutomaticallyChangeAlpha = true
+        
         testTableView.footerView = RefreshFooter.footerRefreshing { [weak self] in
             self?.endRefresh(isHeaderFresh: false)
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIScrollView: SelfAware {
+extension UIScrollView {
     
     var headerView: UIView? {
         get {
@@ -101,12 +101,14 @@ extension UIScrollView: SelfAware {
         reloadDataBlock?(totalDataCount)
     }
     
+}
+
+extension UITableView: SelfAware {
+    
     static func awake() {
         
         if hash() == UITableView.hash() {
             exchangeInstanceMethod(method1: #selector(UITableView.reloadData), method2: #selector(myTableViewReloadData))
-        } else if hash() == UICollectionView.hash() {
-             exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
         }
     }
     
@@ -115,11 +117,22 @@ extension UIScrollView: SelfAware {
         executeReloadDataBlock()
     }
     
+}
+
+extension UICollectionView: SelfAware {
+    
+    static func awake() {
+        
+        if hash() == UITableView.hash() {
+            exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
+        }
+    }
+    
     @objc dynamic private func myCollectionViewReloadData() {
         myCollectionViewReloadData()
         executeReloadDataBlock()
     }
-
+    
 }
 
 fileprivate extension NSObject {
@@ -138,31 +151,31 @@ protocol SelfAware: class {
 }
 
 class NothingToSeeHere {
-
+    
     static func harmlessFunction() {
-
+        
         let typeCount = Int(objc_getClassList(nil, 0))
         let types = UnsafeMutablePointer<AnyClass>.allocate(capacity: typeCount)
         let autoreleasingTypes = AutoreleasingUnsafeMutablePointer<AnyClass>(types)
         objc_getClassList(autoreleasingTypes, Int32(typeCount))
         for index in 0 ..< typeCount { (types[index] as? SelfAware.Type)?.awake() }
         types.deallocate(capacity: typeCount)
-
+        
     }
-
+    
 }
 
 extension UIApplication {
-
+    
     private static let runOnce: Void = {
         NothingToSeeHere.harmlessFunction()
     }()
-
+    
     override open var next: UIResponder? {
         // Called before applicationDidFinishLaunching
         UIApplication.runOnce
         return super.next
     }
-
+    
 }
 
