@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIScrollView {
+extension UIScrollView: SelfAware {
     
     var headerView: UIView? {
         get {
@@ -80,13 +80,10 @@ extension UIScrollView {
         var totalCount = 0
         
         if self is UITableView {
-            
             let tableView = self as! UITableView
-            
             for idx in 0..<tableView.numberOfSections {
                 totalCount += tableView.numberOfRows(inSection: idx)
             }
-            
         } else if self is UICollectionView {
             let collectionView = self as! UICollectionView
             for idx in 0..<collectionView.numberOfSections {
@@ -101,31 +98,21 @@ extension UIScrollView {
         reloadDataBlock?(totalDataCount)
     }
     
-}
-
-extension UITableView: SelfAware {
-    
     static func awake() {
+        
+        if hash() == UICollectionView.hash() {
+            exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
+        }
         
         if hash() == UITableView.hash() {
             exchangeInstanceMethod(method1: #selector(UITableView.reloadData), method2: #selector(myTableViewReloadData))
         }
+        
     }
     
     @objc dynamic private func myTableViewReloadData() {
         myTableViewReloadData()
         executeReloadDataBlock()
-    }
-    
-}
-
-extension UICollectionView: SelfAware {
-    
-    static func awake() {
-        
-        if hash() == UITableView.hash() {
-            exchangeInstanceMethod(method1: #selector(UICollectionView.reloadData), method2: #selector(myCollectionViewReloadData))
-        }
     }
     
     @objc dynamic private func myCollectionViewReloadData() {

@@ -19,6 +19,7 @@ class RefreshHeader: RefreshBase {
     override var refreshState: RefreshBase.RefreshState {
         didSet {
             if refreshState == oldValue { return }
+            
             super.refreshState = refreshState
             
             guard let scrollView = scrollView else {
@@ -115,22 +116,22 @@ class RefreshHeader: RefreshBase {
         
         // 普通 和 即将刷新 的临界点
         let normal2pullingOffsetY = happenOffsetY - height
-        let pullingPercent = (happenOffsetY - offsetY) / height
+        let getPullingPercent = (happenOffsetY - offsetY) / height
         
         if scrollView.isDragging { // 如果正在拖拽
-            self.pullingPercent = pullingPercent
+            pullingPercent = getPullingPercent
             if refreshState == .default && offsetY < normal2pullingOffsetY {
                 // 转为即将刷新状态
                 refreshState = .pulling
             } else if refreshState == .pulling && offsetY >= normal2pullingOffsetY {
                 // 转为普通状态
-                self.refreshState = .default
+                refreshState = .default
             }
         } else if refreshState == .pulling {// 即将刷新 && 手松开
             // 开始刷新
             beginRefreshing()
-        } else if (pullingPercent < 1) {
-            self.pullingPercent = pullingPercent;
+        } else if getPullingPercent < 1 {
+            pullingPercent = getPullingPercent
         }
         
     }

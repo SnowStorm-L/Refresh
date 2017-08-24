@@ -33,7 +33,7 @@ class RefreshBase: UIView {
         return refreshState == .refreshing || refreshState == .willRefresh
     }
     
-    var isAutomaticallyChangeAlpha: Bool = false {
+    var isAutomaticallyChangeAlpha = false {
         didSet {
             if isRefreshing { return }
             alpha = isAutomaticallyChangeAlpha ? pullingPercent : 1.0
@@ -74,7 +74,6 @@ class RefreshBase: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
     
     override func layoutSubviews() {
         
@@ -158,15 +157,13 @@ class RefreshBase: UIView {
         
         pullingPercent = 1.0
         
-        if let _ = window {
-            refreshState = .refreshing
-        } else {
-            if refreshState != .refreshing {
-                refreshState = .willRefresh
-                setNeedsDisplay()
-            }
+        guard let _ = window else {
+            guard refreshState != .refreshing else { return }
+            refreshState = .willRefresh
+            setNeedsDisplay()
+            return
         }
-        
+        refreshState = .refreshing
     }
     
     func endRefreshing(completion: (()->Void)? = nil) {
@@ -188,20 +185,12 @@ class RefreshBase: UIView {
         backgroundColor = .clear
     }
     
-    func scrollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?)  {
-        
-    }
+    func scrollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?) {}
     
-    func scrollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?) {
-        
-    }
+    func scrollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?) {}
     
-    func scrollViewPanStateDidChange(change: [NSKeyValueChangeKey : Any]?) {
-        
-    }
+    func scrollViewPanStateDidChange(change: [NSKeyValueChangeKey : Any]?) {}
     
-    func placeSubviews() {
-        
-    }
+    func placeSubviews() {}
     
 }

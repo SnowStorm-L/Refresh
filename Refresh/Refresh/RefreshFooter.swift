@@ -17,6 +17,19 @@ class RefreshFooter: RefreshBase {
     fileprivate var lastBottomDelta: CGFloat = 0.0
     fileprivate var lastRefreshCount: NSInteger = 0
     
+    fileprivate var heightForContentBreakView: CGFloat {
+        guard let scrollView = scrollView else {
+            return 0
+        }
+        let h = (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
+        return scrollView.contentHeight - h
+    }
+    
+    fileprivate var happenOffsetY: CGFloat {
+        let deltaH = heightForContentBreakView
+        return deltaH > 0 ? (deltaH - scrollViewOriginalInset.top) : (-scrollViewOriginalInset.top)
+    }
+    
     class func footerRefreshing(refreshingBlock: RefreshingBlock) -> RefreshFooter
     {
         let refreshFooter = RefreshFooter()
@@ -30,17 +43,16 @@ class RefreshFooter: RefreshBase {
         // 内容的高度
         if let scrollView = scrollView {
             let contentHeight = scrollView.contentHeight + ignoredScrollViewContentInsetBottom
-            let scrollHeight = scrollView.height -
-                scrollViewOriginalInset.top - scrollViewOriginalInset.bottom +
-            ignoredScrollViewContentInsetBottom
+            let scrollHeight = scrollView.height - scrollViewOriginalInset.top - scrollViewOriginalInset.bottom + ignoredScrollViewContentInsetBottom
             // 设置位置和尺寸
             y = max(contentHeight, scrollHeight)
         }
     }
-        
+    
     override var refreshState: RefreshBase.RefreshState {
         didSet {
             if refreshState == oldValue { return }
+            
             super.refreshState = refreshState
             
             guard let scrollView = scrollView else {
@@ -59,7 +71,7 @@ class RefreshFooter: RefreshBase {
                         self.endRefreshingCompletionBlock?()
                     }
                 }
-                let deltalHeight = heightForContentBreakView()
+                let deltalHeight = heightForContentBreakView
                 // 刚刷新完毕
                 if oldValue == .refreshing &&
                     deltalHeight > 0 &&
@@ -73,13 +85,13 @@ class RefreshFooter: RefreshBase {
                 
                 UIView.animate(withDuration: Constant.AnimationDuration.fast, animations: {
                     var bottom = self.height + self.scrollViewOriginalInset.bottom
-                    let deltaHeight = self.heightForContentBreakView()
+                    let deltaHeight = self.heightForContentBreakView
                     if (deltaHeight < 0) { // 如果内容高度小于view的高度
                         bottom -= deltaHeight
                     }
                     self.lastBottomDelta = bottom - scrollView.insetBottom
                     scrollView.insetBottom = bottom
-                    scrollView.offsetY = self.happenOffsetY() + self.height
+                    scrollView.offsetY = self.happenOffsetY + self.height
                 }) { (finished) in
                     self.executeRefreshingCallback()
                 }
@@ -98,7 +110,7 @@ class RefreshFooter: RefreshBase {
     
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
-
+        
         if newSuperview != nil, let scrollView = scrollView {
             if scrollView.isKind(of: UITableView.self) || scrollView.isKind(of: UICollectionView.self) {
                 scrollView.reloadDataBlock = { [unowned self] (totalDataCount) in
@@ -125,24 +137,24 @@ class RefreshFooter: RefreshBase {
         let currentOffsetY = scrollView.offsetY
         
         // 尾部控件刚好出现的offsetY
-        let happenOffsetY = self.happenOffsetY()
+        let getHappenOffsetY = happenOffsetY
         
         // 如果是向下滚动到看不见尾部控件，直接返回
-        if currentOffsetY <= happenOffsetY { return }
+        if currentOffsetY <= getHappenOffsetY { return }
         
-        let pullingPercent = (currentOffsetY - happenOffsetY) / height
+        let getPullingPercent = (currentOffsetY - getHappenOffsetY) / height
         
         if refreshState == .noMoreData {
-            self.pullingPercent = pullingPercent
+            pullingPercent = getPullingPercent
             return
         }
         
-        if (scrollView.isDragging) {
+        if scrollView.isDragging {
             
-            self.pullingPercent = pullingPercent
+            pullingPercent = getPullingPercent
             
             // 普通 和 即将刷新 的临界点
-            let normal2pullingOffsetY = happenOffsetY + height
+            let normal2pullingOffsetY = getHappenOffsetY + height
             
             if refreshState == .default && currentOffsetY > normal2pullingOffsetY {
                 // 转为即将刷新状态
@@ -154,31 +166,14 @@ class RefreshFooter: RefreshBase {
         } else if refreshState == .pulling {// 即将刷新 && 手松开
             // 开始刷新
             beginRefreshing()
-        } else if pullingPercent < 1 {
-            self.pullingPercent = pullingPercent
+        } else if getPullingPercent < 1 {
+            pullingPercent = getPullingPercent
         }
         
     }
     
-
     func endRefreshingWithNoMoreData() {
         refreshState = .noMoreData
     }
-    
-    fileprivate func heightForContentBreakView() -> CGFloat {
-        
-        guard let scrollView = scrollView else {
-            return 0
-        }
-        let h = (scrollView.height - scrollViewOriginalInset.bottom - scrollViewOriginalInset.top)
-        return scrollView.contentHeight - h
-    }
-    
-    fileprivate func happenOffsetY() -> CGFloat {
-        
-        let deltaH = heightForContentBreakView()
-        
-        return deltaH > 0 ? (deltaH - scrollViewOriginalInset.top) : (-scrollViewOriginalInset.top)
-    }
-    
+
 }

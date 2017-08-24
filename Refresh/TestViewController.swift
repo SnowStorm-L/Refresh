@@ -25,6 +25,10 @@ class TestViewController: UIViewController {
         
     }
     
+    deinit {
+        print(#function)
+    }
+    
     func setupRefresh() {
         
         testCollectionView.headerView = RefreshHeader.headerRefreshing { [weak self] in
