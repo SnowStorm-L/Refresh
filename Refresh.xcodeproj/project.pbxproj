@@ -40,6 +40,17 @@
 		0F693FC81F41DDC400296C9B /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		0F693FC91F41DDC400296C9B /* UIScrollView+Refresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Refresh.swift"; sourceTree = "<group>"; };
 		0F693FCA1F41DDC400296C9B /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		0F8948661F5055220058FF07 /* FootRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FootRefresh.h; sourceTree = "<group>"; };
+		0F8948671F5055220058FF07 /* FootRefresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FootRefresh.m; sourceTree = "<group>"; };
+		0F8948681F5055220058FF07 /* HeadRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadRefresh.h; sourceTree = "<group>"; };
+		0F8948691F5055220058FF07 /* HeadRefresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadRefresh.m; sourceTree = "<group>"; };
+		0F89486A1F5055220058FF07 /* ImportRefresh .h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImportRefresh .h"; sourceTree = "<group>"; };
+		0F89486B1F5055220058FF07 /* LRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LRefresh.h; sourceTree = "<group>"; };
+		0F89486C1F5055220058FF07 /* LRefresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LRefresh.m; sourceTree = "<group>"; };
+		0F89486D1F5055220058FF07 /* UIScrollView+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Extension.h"; sourceTree = "<group>"; };
+		0F89486E1F5055220058FF07 /* UIScrollView+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Extension.m"; sourceTree = "<group>"; };
+		0F89486F1F5055220058FF07 /* UIView+Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		0F8948701F5055220058FF07 /* UIView+Frame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +83,7 @@
 		0F39268F1F32F1CD00A20B65 /* Refresh */ = {
 			isa = PBXGroup;
 			children = (
+				0F8948651F5055220058FF07 /* Refresh-ObjC */,
 				0F3926901F32F1CD00A20B65 /* AppDelegate.swift */,
 				0F3926921F32F1CD00A20B65 /* ViewController.swift */,
 				0F34DB521F4F03B600AADC3C /* TestViewController.swift */,
@@ -97,6 +109,24 @@
 				0F693FCA1F41DDC400296C9B /* UIView+Extension.swift */,
 			);
 			path = Refresh;
+			sourceTree = "<group>";
+		};
+		0F8948651F5055220058FF07 /* Refresh-ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				0F8948661F5055220058FF07 /* FootRefresh.h */,
+				0F8948671F5055220058FF07 /* FootRefresh.m */,
+				0F8948681F5055220058FF07 /* HeadRefresh.h */,
+				0F8948691F5055220058FF07 /* HeadRefresh.m */,
+				0F89486A1F5055220058FF07 /* ImportRefresh .h */,
+				0F89486B1F5055220058FF07 /* LRefresh.h */,
+				0F89486C1F5055220058FF07 /* LRefresh.m */,
+				0F89486D1F5055220058FF07 /* UIScrollView+Extension.h */,
+				0F89486E1F5055220058FF07 /* UIScrollView+Extension.m */,
+				0F89486F1F5055220058FF07 /* UIView+Frame.h */,
+				0F8948701F5055220058FF07 /* UIView+Frame.m */,
+			);
+			path = "Refresh-ObjC";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
