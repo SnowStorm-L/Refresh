@@ -20,7 +20,7 @@ extension UIScrollView: SelfAware {
                 insertSubview(newView, at: 0)
                 
                 
-                // htvar://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVOCompliance.html#//apple_ref/doc/uid/20002178-BAJEAIEE
+                // https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVOCompliance.html#//apple_ref/doc/uid/20002178-BAJEAIEE
                 /*
                  正确使用-will | didChangeValueForKey：
                  是在不使用符合KVC的访问器/设置器的情况下修改属性
